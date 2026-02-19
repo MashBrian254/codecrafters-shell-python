@@ -24,7 +24,7 @@ def main():
                     if s[1] in builtins:
                         print(f"{s[1]} is a shell builtin")
                     else:
-                        print(f"{s[1]}: command not found")
+                        print(f"{s[1]}: not found")
                 else:
                     print("please enter a command")
 
