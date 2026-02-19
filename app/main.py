@@ -10,9 +10,13 @@ def main():
             break
 
         s = command.split()
-        if s[0] == "echo":
-            text = " ".join(s[1:])
-            print(f"{text}")
+
+        if len(s) > 0:
+            if s[0] == "echo":
+                text = " ".join(s[1:])
+                print(f"{text}")
+            else:
+                print(f"{s[0]}: command not found")
 
         pass
 
