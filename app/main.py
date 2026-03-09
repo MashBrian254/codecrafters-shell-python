@@ -23,18 +23,18 @@ def main():
                 if len(s) > 1:
                     if s[1] in builtins:
                         print(f"{s[1]} is a shell builtin")
-                    elif:
+
+                    else:
                         PATH = os.environ.get("PATH")
                         for dir in PATH.split(":"):
                             file_path = os.path.join(dir, s[1])
                             if os.path.isfile(file_path) and os.access(file_path, os.X_OK):
                                 print(f"{s[1]} is {file_path}")
                                 break
+                        else:
+                            print(f"{s[1]}: not found")
 
-
-                    else:
-
-                        print(f"{s[1]}: not found")
+                        
                 else:
                     print("please enter a command")
 
