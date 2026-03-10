@@ -3,7 +3,7 @@ import shutil
 import subprocess
 import os
 
-BUILTINS = ['type','exit','echo', 'pwd']
+BUILTINS = ['type','exit','echo', 'pwd', 'cd']
 
 def cmd_exit(args):
     sys.exit(0)
@@ -23,11 +23,25 @@ def cmd_type(args):
 def cmd_pwd(args):
     print(os.getcwd())
 
+def cmd_cd(args):
+    if not args:
+        print("cd: missing argument")
+
+    elif len(args) > 1:
+        print("too many arguments")
+    else:  
+        try:            
+            os.chdir(args[0])
+        except FileNotFoundError:
+            print(f"cd: {args[0]}: No such file or directory")
+
+
 COMMAND_MAP = {
     "exit": cmd_exit,
     "echo": cmd_echo,
     "type": cmd_type,
     "pwd": cmd_pwd,
+    "cd" : cmd_cd,
 }
 
 def main():
