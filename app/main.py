@@ -38,10 +38,11 @@ def main():
         cmd, args = parts[0], parts[1:]
         if cmd in COMMAND_MAP:
             COMMAND_MAP[cmd](args)
-        elif path := shutil.which(cmd):
-            subprocess.run([path] + args)
         else:
-            print(f"{cmd}: command not found")
+            try:
+                subprocess.run([cmd] + args)
+            except FileNotFoundError:
+                print(f"{cmd}: command not found") 
         
 
 if __name__ == "__main__":
