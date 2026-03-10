@@ -1,8 +1,9 @@
 import sys
 import shutil
 import subprocess
+import os
 
-BUILTINS =['type','exit','echo']
+BUILTINS = ['type','exit','echo', 'pwd']
 
 def cmd_exit(args):
     sys.exit(0)
@@ -18,6 +19,9 @@ def cmd_type(args):
             print(f"{arg} is {path}")
         else:
             print(f"{arg}: not found")
+
+def cmd_pwd(args):
+    print(os.getcwd())
 
 COMMAND_MAP = {
     "exit": cmd_exit,
