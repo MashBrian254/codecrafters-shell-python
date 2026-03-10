@@ -1,47 +1,48 @@
 import sys
-import os
+import shutil
+import subprocess
+
+BUILTINS =['type','exit','echo']
+
+def cmd_exit(args):
+    sys.exit(0)
+
+def cmd_echo(args):
+        print(" ".join(args))
+
+def cmd_type(args):
+    for arg in args:
+        if arg in BUILTINS:
+            print(f"{arg} is a shell builtin")
+        elif path := shutil.which(arg):
+            print(f"{arg} is {path}")
+        else:
+            print(f"{arg}: not found")
+
+COMMAND_MAP = {
+    "exit": cmd_exit,
+    "echo": cmd_echo,
+    "type": cmd_type,
+}
 
 def main():
 
     while True:
         sys.stdout.write("$ ")
-        builtins =['type','exit','echo']
-
         command = input()
+        parts = command.split()
         
-        s = command.split()
-        if s[0] == "exit":
-            break
+        if not parts:
+            continue
 
-        if len(s) > 0:
-            
-            if s[0] == "echo":
-                text = " ".join(s[1:])
-                print(f"{text}")
+        cmd, args = parts[0], parts[1:]
+        if cmd in COMMAND_MAP:
+            COMMAND_MAP[cmd](args)
+        elif path := shutil.which(cmd):
+            subprocess.run([path] + args)
+        else:
+            print(f"{cmd}: command not found")
         
-            elif s[0] == 'type':
-                if len(s) > 1:
-                    if s[1] in builtins:
-                        print(f"{s[1]} is a shell builtin")
-
-                    else:
-                        PATH = os.environ.get("PATH")
-                        for dir in PATH.split(":"):
-                            file_path = os.path.join(dir, s[1])
-                            if os.path.isfile(file_path) and os.access(file_path, os.X_OK):
-                                print(f"{s[1]} is {file_path}")
-                                break
-                        else:
-                            print(f"{s[1]}: not found")
-
-                        
-                else:
-                    print("please enter a command")
-
-            else:
-                print(f"{s[0]}: command not found")
-
-        pass
 
 if __name__ == "__main__":
     main()
