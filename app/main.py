@@ -27,6 +27,7 @@ COMMAND_MAP = {
     "exit": cmd_exit,
     "echo": cmd_echo,
     "type": cmd_type,
+    "pwd": cmd_pwd,
 }
 
 def main():
