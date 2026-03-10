@@ -29,9 +29,10 @@ def cmd_cd(args):
 
     elif len(args) > 1:
         print("too many arguments")
-    else:  
-        try:            
-            os.chdir(args[0])
+    else: 
+        try:  
+            target_path = os.path.expanduser(args[0])         
+            os.chdir(target_path)
         except FileNotFoundError:
             print(f"cd: {args[0]}: No such file or directory")
 
