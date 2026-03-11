@@ -2,6 +2,7 @@ import sys
 import shutil
 import subprocess
 import os
+import shlex
 
 BUILTINS = ['type','exit','echo', 'pwd', 'cd']
 
@@ -36,6 +37,11 @@ def cmd_cd(args):
         except FileNotFoundError:
             print(f"cd: {args[0]}: No such file or directory")
 
+def parse_arguments(user_input):
+    args = shlex.split(user_input)
+    return args
+    
+
 
 COMMAND_MAP = {
     "exit": cmd_exit,
@@ -49,8 +55,8 @@ def main():
 
     while True:
         sys.stdout.write("$ ")
-        command = input()
-        parts = command.split()
+        user_input = input()
+        parts = parse_arguments(user_input)
         
         if not parts:
             continue
